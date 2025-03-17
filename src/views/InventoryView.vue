@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="inventory in inventories">
+          <tr v-for="inventory in inventories" v-bind:key="inventory.id">
             <td><img :src="inventory.item_image.url" alt="" /></td>
             <td>{{ inventory.title }}</td>
             <td>{{ inventory.quantity }} {{ inventory.unit }}</td>
