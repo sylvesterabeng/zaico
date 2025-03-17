@@ -21,7 +21,7 @@
               <img :src="inventory.item_image.url || fallbackImage" alt="" />
             </td>
             <td>{{ inventory.title }}</td>
-            <td>{{ inventory.quantity }} {{ inventory.unit }}</td>
+            <td>{{ inventory.quantity || '0.0' }} {{ inventory.unit }}</td>
             <td>{{ inventory.category }}</td>
             <td>
               <router-link :to="`/inventory/${inventory.id}`">詳細</router-link>
