@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import axios from 'axios'
+import { fetchInventory } from '@/api'
 import { ref, onMounted } from 'vue'
 
 interface InventoryItem {
@@ -52,14 +52,7 @@ const isLoading = ref(true)
 const getInventory = async () => {
   isLoading.value = true
   try {
-    const response = await axios.get(
-      'https://web.zaico.co.jp/api/v1/inventories',
-      {
-        headers: {
-          Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`,
-        },
-      }
-    )
+    const response = await fetchInventory()
     inventories.value = response.data
     console.log(response.data)
   } catch (error) {
