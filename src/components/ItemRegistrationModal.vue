@@ -6,11 +6,11 @@
           <span class="label-text"
             >商品名 <small class="required">必須</small></span
           >
-          <input type="text" v-model="formData.title"
+          <input type="text" v-model="data.title"
         /></label>
         <label>
           <span class="label-text">カテゴリー</span>
-          <input type="text" v-model="formData.category"
+          <input type="text" v-model="data.category"
         /></label>
       </form>
       <div class="button-wrapper">
@@ -22,9 +22,11 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
 import type { ItemRegistrationRequest } from '@/types'
+import { ref } from 'vue'
 import type { PropType } from 'vue'
+
+const emit = defineEmits(['close', 'submit'])
 
 const props = defineProps({
   isOpen: {
@@ -36,10 +38,10 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['close', 'submit'])
+const data = ref({ ...props.formData })
 
 const handleSubmit = async () => {
-  emit('submit')
+  emit('submit', data.value)
 }
 
 const handleCloseModal = () => {

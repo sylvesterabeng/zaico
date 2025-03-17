@@ -4,8 +4,8 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
 import LayoutHeader from '@/components/layouts/LayoutHeader.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <style scoped></style>

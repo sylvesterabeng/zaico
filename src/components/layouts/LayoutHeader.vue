@@ -18,18 +18,18 @@
 
 <script setup lang="ts">
 import { registerItem } from '@/api'
-import { RouterLink } from 'vue-router'
 import ItemRegistrationModal from '@/components/ItemRegistrationModal.vue'
-import { ref, type Ref } from 'vue'
 import type { ItemRegistrationRequest } from '@/types'
+import { ref, type Ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const isModalOpen: Ref<boolean> = ref(false)
 const formData: Ref<ItemRegistrationRequest> = ref({ title: '', category: '' })
 
 // TODO: Add validation
-const handleSubmit = async () => {
+const handleSubmit = async (data: ItemRegistrationRequest) => {
   try {
-    const response = await registerItem(formData.value)
+    await registerItem(data)
   } catch (error) {
     console.error(error)
   } finally {

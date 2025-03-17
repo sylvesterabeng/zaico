@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { fetchInventory } from '@/api'
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 
 interface InventoryItem {
   id: number
