@@ -3,6 +3,10 @@
     <div class="loading">データを読み込み中...</div>
   </template>
 
+  <template v-if="!inventory">
+    <div class="loading">在庫データが存在しません</div>
+  </template>
+
   <template v-else-if="inventory">
     <div class="inventory-detail">
       <div class="inventory-detail__image">
