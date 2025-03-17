@@ -1,9 +1,7 @@
 <template>
   <main>
     <template v-if="isLoading">
-      <div class="loading">
-        データを読み込み中...
-      </div>
+      <div class="loading">データを読み込み中...</div>
     </template>
 
     <template v-else>
@@ -19,9 +17,9 @@
         </thead>
         <tbody>
           <tr v-for="inventory in inventories">
-            <td><img :src="inventory.item_image.url" alt=""></td>
+            <td><img :src="inventory.item_image.url" alt="" /></td>
             <td>{{ inventory.title }}</td>
-            <td>{{ inventory.quantity }}  {{ inventory.unit }}</td>
+            <td>{{ inventory.quantity }} {{ inventory.unit }}</td>
             <td>{{ inventory.category }}</td>
             <td>
               <router-link :to="`/inventory/${inventory.id}`">詳細</router-link>
@@ -35,17 +33,17 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import { ref, onMounted } from "vue";
+import { ref, onMounted } from 'vue'
 
 interface InventoryItem {
-  id: number;
-  title: string;
-  quantity: number;
-  unit: string;
-  category: string;
+  id: number
+  title: string
+  quantity: number
+  unit: string
+  category: string
   item_image: {
-    url: string;
-  };
+    url: string
+  }
 }
 
 const inventories = ref<InventoryItem[]>([])
@@ -54,11 +52,14 @@ const isLoading = ref(true)
 const getInventory = async () => {
   isLoading.value = true
   try {
-    const response = await axios.get('https://web.zaico.co.jp/api/v1/inventories', {
-      headers: {
-        Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`
+    const response = await axios.get(
+      'https://web.zaico.co.jp/api/v1/inventories',
+      {
+        headers: {
+          Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`,
+        },
       }
-    })
+    )
     inventories.value = response.data
     console.log(response.data)
   } catch (error) {
