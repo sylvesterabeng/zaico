@@ -37,6 +37,7 @@
 
 <script setup lang="ts">
 import { fetchInventoryDetail } from '@/api'
+import { fallbackImage } from '@/assets'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -55,8 +56,6 @@ interface InventoryItem {
 const route = useRoute()
 const inventory = ref<InventoryItem | null>(null)
 const isLoading = ref(false)
-const fallbackImage =
-  'https://web.zaico.co.jp/vite/assets/no_image-4a22f01b.png'
 
 // TODO: Add inventory detail store
 const getInventoryDetail = async () => {

@@ -1,10 +1,10 @@
 <template>
-  <main>
-    <template v-if="isLoading">
-      <div class="loading">データを読み込み中...</div>
-    </template>
+  <template v-if="isLoading">
+    <div class="loading">データを読み込み中...</div>
+  </template>
 
-    <template v-else>
+  <template v-else>
+    <div class="table-wrapper">
       <table class="inventory-table">
         <thead>
           <tr>
@@ -23,23 +23,21 @@
             <td>{{ inventory.title }}</td>
             <td>{{ inventory.quantity || '0.0' }} {{ inventory.unit }}</td>
             <td>{{ inventory.category }}</td>
-            <td>
+            <td class="inventory-table__link">
               <router-link :to="`/inventory/${inventory.id}`">詳細</router-link>
             </td>
           </tr>
         </tbody>
       </table>
-    </template>
-  </main>
+    </div>
+  </template>
 </template>
 
 <script setup lang="ts">
+import { fallbackImage } from '@/assets'
 import { useInventoryStore } from '@/stores/inventories'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
-
-const fallbackImage =
-  'https://web.zaico.co.jp/vite/assets/no_image-4a22f01b.png'
 
 const inventoryStore = useInventoryStore()
 const { items, isLoading } = storeToRefs(inventoryStore)
@@ -55,25 +53,58 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.inventory-table {
-  max-width: 1000px;
-  margin: 40px auto;
+.table-wrapper {
+  padding: 40px 0;
 
-  thead {
-    tr {
-      border-bottom: 1px solid var(--color-border);
+  .inventory-table {
+    max-width: 1000px;
+    margin: 0 auto;
+
+    thead {
+      tr {
+        border-bottom: 1px solid var(--color-border);
+      }
     }
-  }
 
-  &__img {
-    width: 100px;
-  }
+    th {
+      padding: 8px 12px;
+      text-align: start;
+    }
 
-  &__title {
-    width: 50%;
-  }
-  &__more {
-    width: 60px;
+    td {
+      padding: 8px 12px;
+    }
+
+    img {
+      border-radius: 8px;
+      min-height: 48px;
+      min-width: 48px;
+    }
+
+    &__img {
+      width: 100px;
+    }
+
+    &__title {
+      width: 50%;
+    }
+    &__more {
+      width: 60px;
+    }
+    &__link {
+      a,
+      .green {
+        color: hsla(160, 100%, 37%, 1);
+        transition: 0.4s;
+        padding: 3px;
+      }
+
+      @media (hover: hover) {
+        a:hover {
+          background-color: hsla(160, 100%, 37%, 0.2);
+        }
+      }
+    }
   }
 }
 
