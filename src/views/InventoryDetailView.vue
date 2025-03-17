@@ -6,7 +6,7 @@
   <template v-else-if="inventory">
     <div class="inventory-detail">
       <div class="inventory-detail__image">
-        <img :src="inventory.item_image.url" alt="" />
+        <img :src="inventory.item_image.url || fallbackImage" alt="" />
       </div>
 
       <div class="inventory-detail__info">
@@ -51,6 +51,7 @@ interface InventoryItem {
 const route = useRoute()
 const inventory = ref<InventoryItem | null>(null)
 const isLoading = ref(false)
+const fallbackImage = 'https://placehold.jp/250x250.png?text=NO+IMAGE'
 
 const getInventoryDetail = async () => {
   isLoading.value = true

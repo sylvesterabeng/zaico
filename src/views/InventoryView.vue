@@ -17,7 +17,9 @@
         </thead>
         <tbody>
           <tr v-for="inventory in inventories" v-bind:key="inventory.id">
-            <td><img :src="inventory.item_image.url" alt="" /></td>
+            <td>
+              <img :src="inventory.item_image.url || fallbackImage" alt="" />
+            </td>
             <td>{{ inventory.title }}</td>
             <td>{{ inventory.quantity }} {{ inventory.unit }}</td>
             <td>{{ inventory.category }}</td>
@@ -48,6 +50,7 @@ interface InventoryItem {
 
 const inventories = ref<InventoryItem[]>([])
 const isLoading = ref(true)
+const fallbackImage = 'https://placehold.jp/250x250.png?text=NO+IMAGE'
 
 const getInventory = async () => {
   isLoading.value = true
