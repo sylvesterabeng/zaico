@@ -190,7 +190,7 @@ const uploadImage = (e: Event) => {
 
       button {
         cursor: pointer;
-        font-size: 12px;
+        font-size: 14px;
       }
 
       .cancel-button {
@@ -204,7 +204,10 @@ const uploadImage = (e: Event) => {
       }
 
       .submit-button {
-        padding: 2px 8px;
+        padding: 4px 16px;
+        border-radius: 2px;
+        border: none;
+
         &:hover {
           opacity: 0.95;
         }
