@@ -7,17 +7,17 @@
       </nav>
       <nav @click="handleOpenModal">在庫データ登録</nav>
     </div>
+    <ItemRegistrationModal
+      :form-data="formData"
+      :is-open="isModalOpen"
+      :is-loading="isLoading"
+      @close="handleCloseModal"
+      @submit="handleSubmit"
+    />
   </header>
   <main>
     <slot></slot>
   </main>
-  <ItemRegistrationModal
-    :form-data="formData"
-    :is-open="isModalOpen"
-    :is-loading="isLoading"
-    @close="handleCloseModal"
-    @submit="handleSubmit"
-  />
 </template>
 
 <script setup lang="ts">
