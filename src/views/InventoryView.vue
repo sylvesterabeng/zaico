@@ -15,8 +15,8 @@
             <th class="inventory-table__more"></th>
           </tr>
         </thead>
-        <tbody>
-          <tr v-for="inventory in inventories" v-bind:key="inventory.id">
+        <tbody v-if="items.length">
+          <tr v-for="inventory in items" :key="inventory.id">
             <td>
               <img :src="inventory.item_image.url || fallbackImage" alt="" />
             </td>
@@ -34,35 +34,19 @@
 </template>
 
 <script setup lang="ts">
-import { fetchInventory } from '@/api'
-import { onMounted, ref } from 'vue'
+import { useInventoryStore } from '@/stores/inventories'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 
-interface InventoryItem {
-  id: number
-  title: string
-  quantity: number
-  unit: string
-  category: string
-  item_image: {
-    url: string
-  }
-}
+const fallbackImage =
+  'https://web.zaico.co.jp/vite/assets/no_image-4a22f01b.png'
 
-const inventories = ref<InventoryItem[]>([])
-const isLoading = ref(true)
-const fallbackImage = 'https://placehold.jp/250x250.png?text=NO+IMAGE'
+const inventoryStore = useInventoryStore()
+const { items, isLoading } = storeToRefs(inventoryStore)
+const { fetch } = inventoryStore
 
 const getInventory = async () => {
-  isLoading.value = true
-  try {
-    const response = await fetchInventory()
-    inventories.value = response.data
-    console.log(response.data)
-  } catch (error) {
-    console.error(error)
-  } finally {
-    isLoading.value = false
-  }
+  await fetch()
 }
 
 onMounted(() => {

@@ -14,8 +14,10 @@
         /></label>
       </form>
       <div class="button-wrapper">
-        <button @click="handleCloseModal">キャンセル</button>
-        <button @click="handleSubmit">登録</button>
+        <button @click="handleCloseModal" :disabled="isLoading">
+          キャンセル
+        </button>
+        <button @click="handleSubmit" :disabled="isLoading">登録</button>
       </div>
     </div>
   </div>
@@ -32,6 +34,9 @@ const props = defineProps({
   isOpen: {
     type: Boolean,
   },
+  isLoading: {
+    type: Boolean,
+  },
   formData: {
     type: Object as PropType<ItemRegistrationRequest>,
     required: true,
@@ -40,12 +45,18 @@ const props = defineProps({
 
 const data = ref({ ...props.formData })
 
+const resetData = () => {
+  data.value = { ...props.formData }
+}
+
 const handleSubmit = async () => {
   emit('submit', data.value)
+  resetData()
 }
 
 const handleCloseModal = () => {
   emit('close')
+  resetData()
 }
 </script>
 

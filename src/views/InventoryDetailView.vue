@@ -55,8 +55,10 @@ interface InventoryItem {
 const route = useRoute()
 const inventory = ref<InventoryItem | null>(null)
 const isLoading = ref(false)
-const fallbackImage = 'https://placehold.jp/250x250.png?text=NO+IMAGE'
+const fallbackImage =
+  'https://web.zaico.co.jp/vite/assets/no_image-4a22f01b.png'
 
+// TODO: Add inventory detail store
 const getInventoryDetail = async () => {
   isLoading.value = true
   try {

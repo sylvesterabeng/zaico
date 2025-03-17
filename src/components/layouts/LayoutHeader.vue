@@ -11,17 +11,23 @@
   <ItemRegistrationModal
     :form-data="formData"
     :is-open="isModalOpen"
+    :is-loading="isLoading"
     @close="handleCloseModal"
     @submit="handleSubmit"
   />
 </template>
 
 <script setup lang="ts">
-import { registerItem } from '@/api'
 import ItemRegistrationModal from '@/components/ItemRegistrationModal.vue'
+import { useInventoryStore } from '@/stores/inventories'
 import type { ItemRegistrationRequest } from '@/types'
+import { storeToRefs } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { RouterLink } from 'vue-router'
+
+const inventoryStore = useInventoryStore()
+const { isLoading } = storeToRefs(inventoryStore)
+const { register } = inventoryStore
 
 const isModalOpen: Ref<boolean> = ref(false)
 const formData: Ref<ItemRegistrationRequest> = ref({ title: '', category: '' })
@@ -29,7 +35,7 @@ const formData: Ref<ItemRegistrationRequest> = ref({ title: '', category: '' })
 // TODO: Add validation
 const handleSubmit = async (data: ItemRegistrationRequest) => {
   try {
-    await registerItem(data)
+    await register(data)
   } catch (error) {
     console.error(error)
   } finally {

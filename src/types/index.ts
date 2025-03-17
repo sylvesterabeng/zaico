@@ -1,4 +1,4 @@
-export type ItemRegistrationRequest = {
+export interface ItemRegistrationRequest {
   title: string
   quantity?: number
   unit?: string
@@ -23,4 +23,15 @@ export type ItemRegistrationRequest = {
   is_quantity_auto_conversion_by_unit?: string
   quantity_auto_conversion_by_unit_name?: string
   quantity_auto_conversion_by_unit_factor?: string
+}
+
+export interface InventoryItem {
+  id: number
+  title: string
+  quantity: number
+  unit: string
+  category: string
+  item_image: {
+    url: string
+  }
 }
