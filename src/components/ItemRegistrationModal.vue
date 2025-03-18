@@ -1,6 +1,7 @@
 <template>
   <div v-if="isOpen" class="container" @click.self="handleCloseModal">
     <div class="contents">
+      <h2>在庫データ登録</h2>
       <div v-if="error" class="error">
         <small>{{ error }}</small>
       </div>
@@ -132,6 +133,7 @@ const uploadImage = (e: Event) => {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px 8px;
 
   .error {
     background-color: #f5a2a4;
@@ -142,19 +144,20 @@ const uploadImage = (e: Event) => {
   }
 
   .contents {
-    height: fit-content;
     padding: 32px 40px;
-    margin: 0 8px;
+    max-height: 100%;
+    overflow: auto;
     display: flex;
     align-items: center;
     flex-direction: column;
     background-color: var(--color-background);
     border-radius: 8px;
-    gap: 40px;
+    gap: 24px;
 
     form {
       display: flex;
       gap: 20px;
+      margin-bottom: 16px;
 
       .image-upload-zone {
         display: flex;
@@ -195,6 +198,12 @@ const uploadImage = (e: Event) => {
 
       .required {
         color: #ff474c;
+      }
+    }
+
+    @media (max-width: 768px) {
+      form {
+        flex-direction: column;
       }
     }
 
