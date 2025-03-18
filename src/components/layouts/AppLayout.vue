@@ -8,6 +8,7 @@
       <nav @click="handleOpenModal">在庫データ登録</nav>
     </div>
     <ItemRegistrationModal
+      :error="error"
       :form-data="formData"
       :is-open="isModalOpen"
       :is-loading="isLoading"
@@ -25,27 +26,38 @@ import ItemRegistrationModal from '@/components/ItemRegistrationModal.vue'
 import { useInventoryStore } from '@/stores/inventories'
 import type { ItemRegistrationRequest } from '@/types'
 import { storeToRefs } from 'pinia'
-import { ref, type Ref } from 'vue'
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+
+const NO_TITLE_ERROR = '商品名を入力してください'
 
 const inventoryStore = useInventoryStore()
 const { isLoading } = storeToRefs(inventoryStore)
 const { register } = inventoryStore
 
-const isModalOpen: Ref<boolean> = ref(false)
-const formData: Ref<ItemRegistrationRequest> = ref({ title: '' })
+const isModalOpen = ref<boolean>(false)
+const formData = ref<ItemRegistrationRequest>({ title: '' })
+const error = ref<string>('')
 
-// TODO: Add validation
+const resetForm = () => (formData.value = { title: '' })
+
+const validate = (data: ItemRegistrationRequest) => {
+  if (data.title === '') {
+    throw new Error(NO_TITLE_ERROR)
+  }
+}
+
 const handleSubmit = async (data: ItemRegistrationRequest) => {
   try {
+    error.value = ''
     formData.value = data
+
+    validate(data)
     await register(data)
-  } catch (error) {
-    console.error(error)
-  } finally {
     handleCloseModal()
-    // reset data
-    formData.value = { title: '' }
+    resetForm()
+  } catch (err) {
+    error.value = (err as Error).message
   }
 }
 
@@ -56,6 +68,7 @@ const handleOpenModal = () => {
 
 const handleCloseModal = () => {
   isModalOpen.value = false
+  error.value = ''
   document.body.classList.remove('no-scroll')
 }
 </script>

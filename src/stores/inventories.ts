@@ -5,7 +5,7 @@ import { computed, ref } from 'vue'
 
 export const useInventoryStore = defineStore('inventory', () => {
   const items = ref<InventoryItem[]>([])
-  const isLoading = ref(false)
+  const isLoading = ref<boolean>(false)
 
   const totalItems = computed(() => items.value.length)
 
@@ -16,6 +16,7 @@ export const useInventoryStore = defineStore('inventory', () => {
       items.value = res.data
     } catch (error) {
       console.error('在庫一覧取得', error)
+      throw error
     } finally {
       isLoading.value = false
     }
@@ -28,6 +29,7 @@ export const useInventoryStore = defineStore('inventory', () => {
       await fetch()
     } catch (error) {
       console.error('在庫登録失敗', error)
+      throw new Error(error.response.data.message)
     } finally {
       isLoading.value = false
     }

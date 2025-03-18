@@ -1,6 +1,9 @@
 <template>
   <div v-if="isOpen" class="container" @click.self="handleCloseModal">
     <div class="contents">
+      <div v-if="error" class="error">
+        <small>{{ error }}</small>
+      </div>
       <form>
         <div class="image-upload-zone">
           <img
@@ -18,7 +21,7 @@
           /></label>
           <label>
             <span class="label-text">数量</span>
-            <input type="text" v-model="data.quantity"
+            <input type="number" v-model="data.quantity"
           /></label>
           <label>
             <span class="label-text">単位</span>
@@ -69,10 +72,13 @@ const props = defineProps({
     type: Object as PropType<ItemRegistrationRequest>,
     required: true,
   },
+  error: {
+    type: String,
+  },
 })
 
-const data = ref({ ...props.formData })
-const previewImage = ref('')
+const data = ref<ItemRegistrationRequest>({ ...props.formData })
+const previewImage = ref<string>('')
 
 watch(
   () => props.formData,
@@ -126,6 +132,14 @@ const uploadImage = (e: Event) => {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .error {
+    background-color: #f5a2a4;
+    color: #b32227;
+    width: 100%;
+    border-radius: 3px;
+    padding: 4px 12px;
+  }
 
   .contents {
     height: fit-content;
