@@ -20,7 +20,11 @@
             <td>
               <img :src="inventory.item_image.url || fallbackImage" alt="" />
             </td>
-            <td class="inventory-table__title">{{ inventory.title }}</td>
+            <td class="inventory-table__title">
+              <router-link :to="`/inventory/${inventory.id}`">{{
+                inventory.title
+              }}</router-link>
+            </td>
             <td class="inventory-table__quantity">
               {{ inventory.quantity || '0.0' }} {{ inventory.unit }}
             </td>
@@ -31,8 +35,9 @@
           </tr>
         </tbody>
       </table>
-      <!-- TODO: Pagination -->
     </div>
+    <!-- TODO: Pagination -->
+    <div class="pagination">全{{ items.length }}件</div>
   </template>
 </template>
 
@@ -57,16 +62,24 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .table-wrapper {
-  padding: var(--table-padding-y) 16px;
+  padding: var(--table-padding-top) 16px 0;
+  height: calc(100vh - var(--header-height) - var(--pagination-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .inventory-table {
     max-width: 1000px;
+    width: 100%;
     margin: 0 auto;
     display: block;
     overflow-x: auto;
     white-space: nowrap;
     // fill available space
-    height: calc(100vh - var(--header-height) - (var(--table-padding-y) * 2));
+    height: calc(
+      100vh - var(--header-height) -
+        (var(--table-padding-top) * 1) - var(--pagination-height)
+    );
     overflow: auto;
 
     thead {
@@ -104,6 +117,17 @@ onMounted(() => {
       white-space: break-spaces;
       word-break: break-all;
       max-width: 50%;
+
+      a {
+        color: unset;
+        text-decoration: underline;
+
+        @media (hover: hover) {
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
     }
     &__quantity {
       width: 240px;
@@ -135,6 +159,13 @@ onMounted(() => {
       }
     }
   }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--pagination-height);
 }
 
 .loading {
