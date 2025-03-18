@@ -7,18 +7,18 @@
       </nav>
       <nav @click="handleOpenModal">在庫データ登録</nav>
     </div>
-    <ItemRegistrationModal
-      :error="error"
-      :form-data="formData"
-      :is-open="isModalOpen"
-      :is-loading="isLoading"
-      @close="handleCloseModal"
-      @submit="handleSubmit"
-    />
   </header>
   <main>
     <slot></slot>
   </main>
+  <ItemRegistrationModal
+    :error="error"
+    :form-data="formData"
+    :is-open="isModalOpen"
+    :is-loading="isLoading"
+    @close="handleCloseModal"
+    @submit="handleSubmit"
+  />
 </template>
 
 <script setup lang="ts">
@@ -63,13 +63,11 @@ const handleSubmit = async (data: ItemRegistrationRequest) => {
 
 const handleOpenModal = () => {
   isModalOpen.value = true
-  document.body.classList.add('no-scroll')
 }
 
 const handleCloseModal = () => {
   isModalOpen.value = false
   error.value = ''
-  document.body.classList.remove('no-scroll')
 }
 </script>
 

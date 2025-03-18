@@ -7,10 +7,6 @@
   position: relative;
 }
 
-.no-scroll {
-  overflow: hidden;
-}
-
 a {
   text-decoration: none;
 }
