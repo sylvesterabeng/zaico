@@ -5,37 +5,49 @@
 
   <template v-else>
     <div class="table-wrapper">
-      <table class="inventory-table">
-        <thead>
-          <tr>
-            <th class="inventory-table__img">写真</th>
-            <th class="inventory-table__title">商品名</th>
-            <th>在庫数</th>
-            <th>カテゴリ</th>
-            <th class="inventory-table__more"></th>
-          </tr>
-        </thead>
-        <tbody v-if="items.length">
-          <tr v-for="inventory in items" :key="inventory.id">
-            <td>
-              <img :src="inventory.item_image.url || fallbackImage" alt="" />
-            </td>
-            <td class="inventory-table__title">
-              <router-link :to="`/inventory/${inventory.id}`">{{
-                inventory.title
-              }}</router-link>
-            </td>
-            <td class="inventory-table__quantity">
-              {{ inventory.quantity || '0.0' }} {{ inventory.unit }}
-            </td>
-            <td class="inventory-table__category">{{ inventory.category }}</td>
-            <td class="inventory-table__link">
-              <router-link :to="`/inventory/${inventory.id}`">詳細</router-link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <template v-if="items.length">
+        <table class="inventory-table">
+          <thead>
+            <tr>
+              <th class="inventory-table__img">写真</th>
+              <th class="inventory-table__title">商品名</th>
+              <th>在庫数</th>
+              <th>カテゴリ</th>
+              <th class="inventory-table__more"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="inventory in items" :key="inventory.id">
+              <td>
+                <img :src="inventory.item_image.url || fallbackImage" alt="" />
+              </td>
+              <td class="inventory-table__title">
+                <router-link :to="`/inventory/${inventory.id}`">{{
+                  inventory.title
+                }}</router-link>
+              </td>
+              <td class="inventory-table__quantity">
+                {{ inventory.quantity || '0.0' }} {{ inventory.unit }}
+              </td>
+              <td class="inventory-table__category">
+                {{ inventory.category }}
+              </td>
+              <td class="inventory-table__link">
+                <router-link :to="`/inventory/${inventory.id}`"
+                  >詳細</router-link
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+      <template v-else
+        ><div class="inventory-empty">
+          在庫データを登録してください
+        </div></template
+      >
     </div>
+
     <!-- TODO: Pagination -->
     <div class="pagination">全{{ items.length }}件</div>
   </template>
@@ -67,6 +79,10 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  .inventory-empty {
+    text-align: center;
+  }
 
   .inventory-table {
     max-width: 1000px;
