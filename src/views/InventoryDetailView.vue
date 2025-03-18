@@ -55,7 +55,7 @@ interface InventoryItem {
 
 const route = useRoute()
 const inventory = ref<InventoryItem | null>(null)
-const isLoading = ref(false)
+const isLoading = ref<boolean>(false)
 
 // TODO: Add inventory detail store
 const getInventoryDetail = async () => {

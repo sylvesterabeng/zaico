@@ -20,15 +20,18 @@
             <td>
               <img :src="inventory.item_image.url || fallbackImage" alt="" />
             </td>
-            <td>{{ inventory.title }}</td>
-            <td>{{ inventory.quantity || '0.0' }} {{ inventory.unit }}</td>
-            <td>{{ inventory.category }}</td>
+            <td class="inventory-table__title">{{ inventory.title }}</td>
+            <td class="inventory-table__quantity">
+              {{ inventory.quantity || '0.0' }} {{ inventory.unit }}
+            </td>
+            <td class="inventory-table__category">{{ inventory.category }}</td>
             <td class="inventory-table__link">
               <router-link :to="`/inventory/${inventory.id}`">詳細</router-link>
             </td>
           </tr>
         </tbody>
       </table>
+      <!-- TODO: Pagination -->
     </div>
   </template>
 </template>
@@ -54,13 +57,23 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .table-wrapper {
-  padding: 40px 0;
+  padding: var(--table-padding-y) 16px;
 
   .inventory-table {
     max-width: 1000px;
     margin: 0 auto;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    // fill available space
+    height: calc(100vh - var(--header-height) - (var(--table-padding-y) * 2));
+    overflow: auto;
 
     thead {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-background);
+
       tr {
         border-bottom: 1px solid var(--color-border);
       }
@@ -84,12 +97,27 @@ onMounted(() => {
     &__img {
       width: 100px;
     }
-
     &__title {
       width: 50%;
+      min-width: 200px;
+      white-space: break-spaces;
+      word-break: break-all;
+      max-width: 50%;
+    }
+    &__quantity {
+      width: 240px;
+      min-width: 200px;
+      white-space: break-spaces;
+      word-break: break-all;
+    }
+    &__category {
+      width: 240px;
+      min-width: 200px;
+      white-space: break-spaces;
+      word-break: break-all;
     }
     &__more {
-      width: 60px;
+      min-width: 60px;
     }
     &__link {
       a,
