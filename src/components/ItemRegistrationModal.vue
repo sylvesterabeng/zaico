@@ -232,7 +232,7 @@ const uploadImage = (e: Event) => {
         border: none;
 
         &:hover {
-          opacity: 0.95;
+          opacity: 0.8;
         }
       }
     }

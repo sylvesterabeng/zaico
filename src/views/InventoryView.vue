@@ -92,6 +92,7 @@ onMounted(() => {
       border-radius: 8px;
       min-height: 48px;
       min-width: 48px;
+      border: 1px solid var(--color-border);
     }
 
     &__img {
